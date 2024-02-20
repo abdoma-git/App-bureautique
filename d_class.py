@@ -1,5 +1,6 @@
 from connection import *
 
+
 class db_class(Connection):
     def __init__(self):
         super().__init__()
@@ -7,7 +8,7 @@ class db_class(Connection):
     def select(self):
         try:
             cur = self.conn().cursor()
-            cur.execute("SELECT * FROM sem")
+            cur.execute("SELECT * FROM match")
             return cur.fetchall()
         except sqlite3.Error as err:
             print(f"{err}")
@@ -18,9 +19,9 @@ class db_class(Connection):
         try:
             con = self.conn()
             cur = con.cursor()
-            cur.execute("INSERT INTO sem(name, amount, price) VALUES(?,?,?)",args)
+            cur.execute("INSERT INTO match(team1, team2, date_debut, date_fin, status, cote1, cote2, commentaires) VALUES(?,?,?,?,?,?,?,?)",args)
             con.commit()
-            return "product has been sucesfully added"
+            return "The match has been sucesfully added"
         except sqlite3.Error as err:
             print(f"{err}")
         finally:
@@ -30,9 +31,9 @@ class db_class(Connection):
         try:
             con = self.conn()
             cur = con.cursor()
-            cur.execute("UPDATE sem SET name = ?, amount = ?, price = ? WHERE id = ?",args)
+            cur.execute("UPDATE match SET team1 = ?, team2 = ?, date_debut = ?, date_fin = ?, status = ?, cote1 = ?, cote2 = ?, commentaires = ? WHERE id = ?",args)
             con.commit()
-            return "product has been succesfully edited"
+            return "Le match a été bien modifié"
         except sqlite3.Error as err:
             print(f"{err}")
         finally:
@@ -42,9 +43,9 @@ class db_class(Connection):
         try:
             con = self.conn()
             cur = con.cursor()
-            cur.execute("DELETE FROM sem WHERE id = ?",args)
+            cur.execute("DELETE FROM match WHERE id = ?",args)
             con.commit()
-            return "product has been deleted"
+            return "Le match a été supprimé avec success"
         except sqlite3.Error as err:
             print(f"{err}")
         finally:

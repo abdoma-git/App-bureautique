@@ -6,6 +6,7 @@ class Connection:
         pass
     
     def conn(self):
+
         try:
             self.con = sqlite3.connect('db2')
             return self.con
